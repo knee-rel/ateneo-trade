@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import Rating from "./Rating";
+
 const Product = ({ product }) => {
   return (
     <Link to={`/product/${product._id}`}>
@@ -20,6 +22,12 @@ const Product = ({ product }) => {
               <p className="rounded-full bg-blue-500 px-2 py-0.5 text-xs font-semibold text-white">
                 $120
               </p>
+            </div>
+            <div className="px-4 flex items-center">
+              <Rating
+                value={product.rating}
+                text={`${product.numReviews} reviews`}
+              />
             </div>
             <div className="my-4 flex items-center justify-between px-4">
               <p className="text-sm font-semibold text-gray-500">
