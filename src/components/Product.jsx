@@ -1,8 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Product = ({ product }) => {
   return (
-    <a href={`/product/${product._id}`}>
+    <Link to={`/product/${product._id}`}>
       <div className="mx-auto p-5">
         <div className="max-w-xs cursor-pointer rounded-lg bg-white p-2 shadow duration-150 hover:scale-105 hover:shadow-md">
           <img
@@ -12,9 +13,9 @@ const Product = ({ product }) => {
           />
           <div>
             <div className="my-6 flex items-center justify-between px-4">
-              <a href={`/product/${product._id}`}>
+              <Link to={`/product/${product._id}`}>
                 <p className="font-bold text-gray-500">{product.name}</p>
-              </a>
+              </Link>
 
               <p className="rounded-full bg-blue-500 px-2 py-0.5 text-xs font-semibold text-white">
                 $120
@@ -55,7 +56,7 @@ const Product = ({ product }) => {
           </div>
         </div>
       </div>
-    </a>
+    </Link>
   );
 };
 
