@@ -1,16 +1,14 @@
 import React from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-
-//screens
-import HomeScreen from "./screens/HomeScreen";
+import { Outlet } from "react-router-dom";
 
 const App = () => {
   return (
     <>
       <Header />
       <main className="w-full">
-        <HomeScreen />
+        <Outlet />
       </main>
       <Footer />
     </>
