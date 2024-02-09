@@ -34,8 +34,6 @@ const ProductScreen = () => {
         <div className="flex items-center justify-center h-screen">
           <LoadingSpinner />
         </div>
-      ) : error ? (
-        <div>{error?.data.message || error.error}</div>
       ) : (
         <div className="items-start">
           <div className="md:flex items-start justify-center py-12 2xl:px-20 md:px-6 px-4">
