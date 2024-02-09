@@ -3,7 +3,7 @@ import axios from "axios";
 import Product from "../components/Product";
 
 const HomeScreen = () => {
-  const [products, setProducts] = useState();
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -14,7 +14,7 @@ const HomeScreen = () => {
     };
 
     fetchProducts();
-  });
+  }, []);
 
   return (
     <div className="flex-col w-full justify-center p-10">
