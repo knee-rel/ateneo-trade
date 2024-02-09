@@ -6,6 +6,7 @@ import { FaAngleLeft } from "react-icons/fa";
 import Rating from "../components/Rating";
 import ProductDetail from "../components/ProductDetail";
 import Button from "../components/Button";
+import Input from "../components/Input";
 import products from "../products";
 
 const ProductScreen = () => {
@@ -40,14 +41,6 @@ const ProductScreen = () => {
               />
             ))}
           </div>
-          {/* {product.gallery.slice(1, 5).map((image, index) => (
-              <img
-                key={index}
-                alt={`tag-${index}`}
-                className="md:w-48 md:h-48 w-full"
-                src={image}
-              />
-            ))} */}
         </div>
         <div className="xl:w-2/5 md:w-1/2 lg:ml-8 md:ml-6 md:mt-0 mt-6">
           <div className="border-b border-gray-200 pb-6">
@@ -64,14 +57,25 @@ const ProductScreen = () => {
               />
             </div>
           </div>
-          <ProductDetail label="Price" value={300} />
+          <ProductDetail label="Price" value={`P${product.price}`} />
           <ProductDetail label="Condition" value={`${product.condition}/5`} />
+          <ProductDetail
+            label="Deal Options"
+            value={`${product.dealOptions}`}
+          />
+          <ProductDetail
+            label="Contact Number"
+            value={product.contactInformation}
+          />
           <p className="text-base lg:leading-tight leading-normal text-gray-600 dark:text-gray-300 mt-7 w-full">
             {product.description}
           </p>
-          <Button onClick={addToBasket} className="mt-4">
-            Check Availability
-          </Button>
+          <div className="items-center justify-center w-3/4">
+            <Button onClick={addToBasket} className="mt-4 w-1/2">
+              Make an Offer
+            </Button>
+            <Input placeholder={product.price} className="w-1/2" />
+          </div>
         </div>
       </div>
     </div>

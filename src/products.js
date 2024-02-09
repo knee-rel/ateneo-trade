@@ -11,6 +11,7 @@ const products = [
     ],
     description:
       "Bluetooth technology lets you connect it with compatible devices wirelessly High-quality AAC audio offers immersive listening experience Built-in microphone allows you to take calls while working",
+    dealOptions: ["Meet Up", "Mailing & Delivery"],
     brand: "Oppo",
     category: "Electronics",
     contactInformation: "someone.com",
@@ -32,6 +33,7 @@ const products = [
     ],
     description:
       "Introducing the iPhone 11 Pro. A transformative triple-camera system that adds tons of capability without complexity. An unprecedented leap in battery life",
+    dealOptions: ["Meet Up", "Mailing & Delivery"],
     brand: "Apple",
     category: "Electronics",
     contactInformation: "someone.com",
@@ -53,6 +55,7 @@ const products = [
     ],
     description:
       "Characterized by versatile imaging specs, the Polaroid Camera further clarifies itself using a pair of robust focusing systems and an intuitive design",
+    dealOptions: ["Meet Up", "Mailing & Delivery"],
     brand: "Polaroid",
     category: "Electronics",
     contactInformation: "someone.com",
@@ -73,6 +76,7 @@ const products = [
       "/images/headphones.jpg",
     ],
     description: "The ultimate study buddy. Serving your every need.",
+    dealOptions: ["Meet Up", "Mailing & Delivery"],
     brand: "Sony",
     category: "Electronics",
     contactInformation: "someone.com",
@@ -94,6 +98,7 @@ const products = [
     ],
     description:
       "Elevate your typing experience with our sleek and responsive keyboard—crafted for comfort and efficiency, a perfect blend of style and functionality.",
+    dealOptions: ["Meet Up", "Mailing & Delivery"],
     brand: "Logitech",
     category: "Electronics",
     contactInformation: "someone.com",
@@ -115,6 +120,7 @@ const products = [
     ],
     description:
       "Experience cutting-edge technology with our iPhone – a seamless blend of innovation and style, delivering unparalleled performance and sophistication.",
+    dealOptions: ["Meet Up", "Mailing & Delivery"],
     brand: "Amazon",
     category: "Electronics",
     contactInformation: "someone.com",
