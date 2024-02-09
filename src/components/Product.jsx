@@ -20,7 +20,7 @@ const Product = ({ product }) => {
               </Link>
 
               <p className="rounded-full bg-blue-500 px-2 py-0.5 text-xs font-semibold text-white">
-                $120
+                P{product.price}
               </p>
             </div>
             <div className="px-4 flex items-center">
