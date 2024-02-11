@@ -1,17 +1,29 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { FaAngleLeft } from "react-icons/fa";
 
 import Rating from "../components/Rating";
 import ProductDetail from "../components/ProductDetail";
 import Button from "../components/Button";
 import Input from "../components/Input";
-import { useGetProductDetailsQuery } from "../slices/productsApiSlice";
 import LoadingSpinner from "../components/LoadingSpinner";
+
+import { useGetProductDetailsQuery } from "../slices/productsApiSlice";
+import { addToCart } from "../slices/cartSlice";
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [qty, setQty] = useState(1);
+
+  const addTCartHandler = () => {
+    dispatch(addToCart({ ...product, qty }));
+    navigate("/cart");
+  };
 
   const {
     data: product,
@@ -19,9 +31,12 @@ const ProductScreen = () => {
     error,
   } = useGetProductDetailsQuery(productId);
 
-  const addToBasket = () => {
-    console.log("testing button");
-  };
+  useEffect(() => {
+    if (product && qty > product.countInStock) {
+      setQty(product.stock);
+    }
+  }, [product, qty]);
+
   return (
     <div className="items-center">
       <div className="flex items-center p-5">
@@ -86,11 +101,71 @@ const ProductScreen = () => {
               <p className="text-base lg:leading-tight leading-normal text-gray-600 dark:text-gray-300 mt-7 w-full">
                 {product.description}
               </p>
-              <div className="items-center justify-center w-3/4">
-                <Button onClick={addToBasket} className="mt-4 w-1/2">
-                  Make an Offer
-                </Button>
-                <Input placeholder={product.price} className="w-1/2" />
+              <div className="flex-col items-start justify-start">
+                <div className="items-center justify-center mr-5">
+                  <h1 className="mt-8">
+                    Satisfied with current price? Make a purchase now!
+                  </h1>
+                  {product.countInStock > 0 ? (
+                    <div className="flex items-center mt-2">
+                      <label htmlFor="quantity" className="mr-2">
+                        Quantity:
+                      </label>
+                      <select
+                        id="quantity"
+                        name="quantity"
+                        value={qty}
+                        onChange={(e) => setQty(parseInt(e.target.value))}
+                      >
+                        {[...Array(product.countInStock).keys()].map((num) => (
+                          <option key={num + 1} value={num + 1}>
+                            {num + 1}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  ) : (
+                    <p className="text-red-500">Out of stock</p>
+                  )}
+                  <Button
+                    className="mt-2"
+                    onClick={addTCartHandler}
+                    disabled={product.countInStock === 0}
+                  >
+                    Add to Cart
+                  </Button>
+                </div>
+
+                <div className="items-center justify-center">
+                  <h1 className="mt-8">
+                    Not satisfied? Make a bargain by inputting your ideal price!
+                  </h1>
+                  {product.countInStock > 0 ? (
+                    <div className="flex items-center mt-2">
+                      <label htmlFor="quantity" className="mr-2">
+                        Quantity:
+                      </label>
+                      <select
+                        id="quantity"
+                        name="quantity"
+                        value={qty}
+                        onChange={(e) => setQty(parseInt(e.target.value))}
+                      >
+                        {[...Array(product.countInStock).keys()].map((num) => (
+                          <option key={num + 1} value={num + 1}>
+                            {num + 1}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  ) : (
+                    <p className="text-red-500">Out of stock</p>
+                  )}
+                  <div className="flex items-center justify-center">
+                    <Button className="mt-2 w-1/2">Make an Offer</Button>
+                    <Input placeholder={product.price} className="w-1/2" />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
