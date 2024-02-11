@@ -7,7 +7,7 @@ import Rating from "../components/Rating";
 import ProductDetail from "../components/ProductDetail";
 import Button from "../components/Button";
 import Input from "../components/Input";
-import { useGetProductDetailsQuery } from "../slices/productSlice";
+import { useGetProductDetailsQuery } from "../slices/productsApiSlice";
 import LoadingSpinner from "../components/LoadingSpinner";
 
 const ProductScreen = () => {

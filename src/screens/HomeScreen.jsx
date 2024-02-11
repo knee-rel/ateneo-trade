@@ -1,5 +1,5 @@
 import React from "react";
-import { useGetProductsQuery } from "../slices/productSlice";
+import { useGetProductsQuery } from "../slices/productsApiSlice";
 import Product from "../components/Product";
 import LoadingSpinner from "../components/LoadingSpinner";
 
