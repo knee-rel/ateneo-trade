@@ -20,6 +20,7 @@ const CartScreen = () => {
   const [qty, setQty] = useState(
     qtyFromProductScreen ? parseInt(qtyFromProductScreen) : 1
   );
+
   // const addToCartHandler = async (product, qty) => {
   //   dispatch(addToCart({ ...product, qty }));
   // };
@@ -36,14 +37,6 @@ const CartScreen = () => {
   useEffect(() => {
     setQty(qtyFromProductScreen ? parseInt(qtyFromProductScreen) : 1);
   }, [qtyFromProductScreen]);
-
-  // useEffect(() => {
-  //   if (qtyFromProductScreen) {
-  //     setQty(parseInt(qtyFromProductScreen));
-  //   } else {
-  //     setQty(1);
-  //   }
-  // }, [qtyFromProductScreen]);
 
   return (
     <div className="w-full h-full bg-black dark:bg-gray-900 bg-opacity-90 top-0 overflow-y-auto overflow-x-hidden fixed sticky-0">
