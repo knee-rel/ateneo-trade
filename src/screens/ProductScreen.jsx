@@ -20,7 +20,7 @@ const ProductScreen = () => {
 
   const [qty, setQty] = useState(1);
 
-  const addTCartHandler = () => {
+  const addToCartHandler = () => {
     dispatch(addToCart({ ...product, qty }));
     navigate("/cart");
   };
@@ -129,7 +129,7 @@ const ProductScreen = () => {
                   )}
                   <Button
                     className="mt-2"
-                    onClick={addTCartHandler}
+                    onClick={addToCartHandler}
                     disabled={product.countInStock === 0}
                   >
                     Add to Cart
@@ -149,7 +149,7 @@ const ProductScreen = () => {
                         id="quantity"
                         name="quantity"
                         value={qty}
-                        onChange={(e) => setQty(parseInt(e.target.value))}
+                        onChange={(e) => setQty(Number(e.target.value))}
                       >
                         {[...Array(product.countInStock).keys()].map((num) => (
                           <option key={num + 1} value={num + 1}>

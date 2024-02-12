@@ -6,7 +6,11 @@ import PersonIcon from "./icons/PersonIcon";
 import HeartIcon from "./icons/HeartIcon";
 import ShoppingCartIcon from "./icons/ShoppingCartIcon";
 
+import { useSelector } from "react-redux";
+
 const Header = () => {
+  const { cartItems } = useSelector((state) => state.cart);
+
   return (
     <header className="bg-white">
       <div className="container mx-auto px-4 py-8 flex items-center">
@@ -35,13 +39,6 @@ const Header = () => {
           />
         </div>
 
-        <div className="ml-auto md:w-48 hidden sm:flex flex-col place-items-end">
-          <span className="font-bold md:text-xl">8 800 332 65-66</span>
-          <span className="font-semibold text-sm text-gray-400">
-            Support 24/7
-          </span>
-        </div>
-
         <nav className="contents">
           <ul className="ml-4 xl:w-48 flex items-center justify-end">
             <li className="ml-2 lg:ml-4 relative inline-block">
@@ -61,22 +58,27 @@ const Header = () => {
                 <HeartIcon />
               </Link>
             </li>
-            <li className="ml-2 lg:ml-4 relative inline-block">
+            <li className="ml-2 lg:ml-4 relative inline-block justify-items-center">
               <Link to="#">
                 {/* <div className="absolute -top-1 right-0 z-10 bg-yellow-400 text-xs font-bold px-1 py-0.5 rounded-sm">
                   12
                 </div> */}
                 {/* shopping cart */}
+                {cartItems.length > 0 && (
+                  <span class="ml-2 inline-block whitespace-nowrap rounded-[0.27rem] bg-danger-100 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-danger-700">
+                    {cartItems.reduce((a, c) => a + c.qty, 0)}
+                  </span>
+                )}
                 <ShoppingCartIcon />
               </Link>
             </li>
           </ul>
         </nav>
 
-        <div class="ml-4 hidden sm:flex flex-col font-bold">
+        {/* <div class="ml-4 hidden sm:flex flex-col font-bold">
           <span class="text-xs text-gray-400">Your Cart</span>
           <span>$2,650,59</span>
-        </div>
+        </div> */}
       </div>
 
       <hr />
