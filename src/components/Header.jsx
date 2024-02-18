@@ -1,20 +1,70 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 
 //icons
-import PersonIcon from "./icons/PersonIcon";
-import HeartIcon from "./icons/HeartIcon";
-import ShoppingCartIcon from "./icons/ShoppingCartIcon";
-
-import { useSelector } from "react-redux";
+import { FaHeart } from "react-icons/fa";
+import { FaShoppingBag } from "react-icons/fa";
+import { IoPersonSharp } from "react-icons/io5";
 
 const Header = () => {
+  // State to manage the navbar's visibility
+  const [nav, setNav] = useState(false);
+
+  // Set state to manage link captions
+  const [showHeaderLink, setShowHeaderLink] = useState(false);
+
+  //geting from redux the information of cart and users
   const { cartItems } = useSelector((state) => state.cart);
+  const { userInfo } = useSelector((state) => state.auth);
+
+  const logoutHandler = () => {
+    console.log("logout");
+  };
+
+  // Toggle function to handle the navbar's display
+  const handleNav = () => {
+    setNav(!nav);
+  };
+
+  // Array containing header navigation items
+  const primaryHeaderItems = [
+    { id: 1, text: "Sign-In", link: "/profile", icon: <IoPersonSharp /> },
+    { id: 2, text: "Wish List", link: "/wish-list", icon: <FaHeart /> },
+    { id: 3, text: "Bag", link: "/cart", icon: <FaShoppingBag /> },
+  ];
+
+  const secondaryHeaderItems = [
+    { id: 1, text: "Home", link: "/" },
+    { id: 2, text: "Shop", link: "/" },
+    { id: 3, text: "Contact Us", link: "/" },
+    { id: 4, text: "FAQs", link: "/" },
+    { id: 5, text: "Contact Us", link: "/" },
+  ];
+
+  //useEffect to update showHeaderLink on window resize
+  useEffect(() => {
+    const handleResize = () => {
+      setShowHeaderLink(window.innerWidth >= 768);
+    };
+
+    handleResize();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
-    <header className="bg-white">
-      <div className="container mx-auto px-4 py-8 flex items-center">
-        <div className="mr-auto md:w-48 flex-shrink-0">
+    <>
+      <div className="dark:bg-[#707793] bg-white flex justify-between items-center h-24 w-full mx-auto px-4 dark:text-white text-black">
+        {/* Logo */}
+        <div className="mr-auto md:w-48 flex-shrink-0 w-1/8">
           <Link to="/">
             <img
               className="h-8 md:h-10"
@@ -24,65 +74,155 @@ const Header = () => {
           </Link>
         </div>
 
-        <div className="w-full max-w-xs xl:max-w-lg 2xl:max-w-2xl bg-gray-100 rounded-md hidden xl:flex items-center">
-          <select
-            className="bg-transparent uppercase font-bold text-sm p-4 mr-4"
-            name=""
-            id=""
-          >
-            <option>all categories</option>
-          </select>
-          <input
-            className="border-l border-gray-300 bg-transparent font-semibold text-sm pl-4"
-            type="text"
-            placeholder="I'm searching for ..."
-          />
+        {/* Primary Desktop Navigation */}
+        <div className="w-1/2 2xl:max-w-2xl bg-gray-100 dark:bg-[#707793] rounded-md hidden md:flex items-center">
+          <div className="flex items-center justify-center w-full">
+            <select
+              className="bg-transparent uppercase font-bold text-sm p-4 mr-4 w-full"
+              name=""
+              id=""
+            >
+              <option>all categories</option>
+            </select>
+            <input
+              className="border-l border-gray-300 bg-transparent font-semibold text-sm pl-4 w-full"
+              type="text"
+              placeholder="I'm searching for ..."
+            />
+          </div>
         </div>
-
-        <nav className="contents">
+        {/* primary navigation items */}
+        <nav className="hidden md:flex w-1/4">
           <ul className="ml-4 xl:w-48 flex items-center justify-end">
-            <li className="ml-2 lg:ml-4 relative inline-block">
-              <Link to="#">
-                {/* <svg className="svg-icon" viewBox="0 0 20 20">
-                  <path d="M12.075,10.812c1.358-0.853,2.242-2.507,2.242-4.037c0-2.181-1.795-4.618-4.198-4.618S5.921,4.594,5.921,6.775c0,1.53,0.884,3.185,2.242,4.037c-3.222,0.865-5.6,3.807-5.6,7.298c0,0.23,0.189,0.42,0.42,0.42h14.273c0.23,0,0.42-0.189,0.42-0.42C17.676,14.619,15.297,11.677,12.075,10.812 M6.761,6.775c0-2.162,1.773-3.778,3.358-3.778s3.359,1.616,3.359,3.778c0,2.162-1.774,3.778-3.359,3.778S6.761,8.937,6.761,6.775 M3.415,17.69c0.218-3.51,3.142-6.297,6.704-6.297c3.562,0,6.486,2.787,6.705,6.297H3.415z"></path>
-                </svg> */}
-                <PersonIcon />
-              </Link>
-            </li>
-            <li className="ml-2 lg:ml-4 relative inline-block">
-              <Link to="#">
-                {/* <div className="absolute -top-1 right-0 z-10 bg-yellow-400 text-xs font-bold px-1 py-0.5 rounded-sm">
-                  3
-                </div> */}
-                {/* heart icon */}
-                <HeartIcon />
-              </Link>
-            </li>
-            <li className="ml-2 lg:ml-4 relative inline-block justify-items-center">
-              <Link to="#">
-                {/* <div className="absolute -top-1 right-0 z-10 bg-yellow-400 text-xs font-bold px-1 py-0.5 rounded-sm">
-                  12
-                </div> */}
-                {/* shopping cart */}
-                {cartItems.length > 0 && (
-                  <span class="ml-2 inline-block whitespace-nowrap rounded-[0.27rem] bg-danger-100 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-danger-700">
-                    {cartItems.reduce((a, c) => a + c.qty, 0)}
-                  </span>
-                )}
-                <ShoppingCartIcon />
-              </Link>
-            </li>
+            {showHeaderLink &&
+              primaryHeaderItems.map((item) => (
+                <li key={item.id} className="ml-2 lg:ml-4 flex">
+                  <Link to={item.link} className="flex items-center">
+                    {window.innerWidth <= 768 ? (
+                      <>
+                        <p className="ml-2">{item.text}</p>
+                        {item.icon}
+                      </>
+                    ) : (
+                      <>{item.icon}</>
+                    )}
+                  </Link>
+                </li>
+              ))}
           </ul>
+          {cartItems.length > 0 && (
+            <span className="inline-block whitespace-nowrap rounded-[0.27rem] bg-danger-100 px-[0.65em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-danger-700 -ml-1 pb-3">
+              {cartItems.reduce((a, c) => a + c.qty, 0)}
+            </span>
+          )}
         </nav>
 
-        {/* <div class="ml-4 hidden sm:flex flex-col font-bold">
-          <span class="text-xs text-gray-400">Your Cart</span>
-          <span>$2,650,59</span>
-        </div> */}
+        {/* Mobile Navigation Icon Unopened */}
+        <div onClick={handleNav} className="block md:hidden">
+          <AiOutlineMenu size={20} />
+        </div>
+        {/* Mobile Navigation Menu */}
+        <ul
+          className={
+            nav
+              ? "flex-row items-center justify-center fixed md:hidden left-0 top-0 w-[100%] h-full border-r dark:border-r-gray-900 border-r-gray-300 dark:bg-[#707793] bg-white ease-in-out duration-500 p-8"
+              : "ease-in-out w-[60%] duration-500 fixed top-0 bottom-0 left-[-100%]"
+          }
+        >
+          {/* Mobile Logo */}
+          <div className="flex items-center justify-between">
+            <Link to="/">
+              <img
+                className="h-8 md:h-10"
+                src="https://i.ibb.co/98pHdFq/2021-10-27-15h51-15.png"
+                alt=""
+              />
+            </Link>
+            {/* nav menu logic */}
+            <div onClick={handleNav} className="block md:hidden">
+              {nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}
+            </div>
+          </div>
+
+          {/* search bar component */}
+          <div>
+            <select
+              className="bg-transparent uppercase font-bold text-sm p-4 mr-4"
+              name=""
+              id=""
+            >
+              <option>all categories</option>
+            </select>
+            <input
+              className="border-l border-gray-300 bg-transparent font-semibold text-sm pl-4"
+              type="text"
+              placeholder="I'm searching for ..."
+            />
+          </div>
+
+          {/* Mobile Navigation Items */}
+          <div>
+            <div className="flex flex-col items-start justify-center">
+              {/* secondary mobile header items */}
+              {secondaryHeaderItems.map((item) => (
+                <Link
+                  key={item.id}
+                  className="p-4 border-b w-full rounded-xl hover:bg-[#00df9a] duration-300 hover:text-black cursor-pointer border-gray-200"
+                >
+                  {item.text}
+                </Link>
+              ))}
+            </div>
+
+            {/* primary header navigation items */}
+            {primaryHeaderItems.map((item) => (
+              <li className="lg:ml-4 flex items-center">
+                <Link
+                  to={item.link}
+                  className="flex items-center p-4 border-b w-full rounded-xl hover:bg-[#00df9a] duration-300 hover:text-black cursor-pointer border-gray-200"
+                >
+                  {item.icon === <FaShoppingBag /> ? (
+                    <div className="flex items-center">
+                      {item.text}
+                      {cartItems.length > 0 && (
+                        <span className="inline-block whitespace-nowrap rounded-[0.27rem] bg-danger-100 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-danger-700">
+                          {cartItems.reduce((a, c) => a + c.qty, 0)}
+                        </span>
+                      )}
+                    </div>
+                  ) : (
+                    <>{item.icon}</>
+                  )}
+                  <p className="ml-3 dark:text-white text-black">{item.text}</p>
+                </Link>
+              </li>
+            ))}
+            {cartItems.length > 0 && (
+              <span className="inline-block whitespace-nowrap rounded-[0.27rem] bg-danger-100 px-[0.65em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-danger-700">
+                {cartItems.reduce((a, c) => a + c.qty, 0)}
+              </span>
+            )}
+          </div>
+        </ul>
       </div>
 
-      <hr />
-    </header>
+      {/* secondary header desktop mode */}
+      <div className="dark:bg-[#707793] bg-white justify-center items-center h-14 mx-auto px-4 dark:text-white text-black hidden md:flex w-full">
+        <div className="flex items-center justify-between">
+          <ul className="hidden md:flex">
+            {secondaryHeaderItems.map((item) => (
+              <Link
+                key={item.id}
+                to={item.link}
+                className="p-4 hover:bg-[#3bba9c] rounded-xl m-2 cursor-pointer duration-300 hover:text-black"
+              >
+                {item.text}
+              </Link>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </>
   );
 };
 

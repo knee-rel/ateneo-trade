@@ -7,7 +7,7 @@ const HomeScreen = () => {
   const { data: products, isLoading, error } = useGetProductsQuery();
 
   return (
-    <div className="flex-col w-full justify-center items-center lg:p-10 p-5 bg-white dark:bg-gray-800">
+    <div className="flex-col w-full justify-center items-center lg:p-10 p-5 bg-white dark:bg-[#1d2130]">
       {isLoading ? (
         <div className="flex items-center justify-center h-screen">
           <LoadingSpinner />
