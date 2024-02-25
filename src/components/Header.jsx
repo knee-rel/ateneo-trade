@@ -17,6 +17,7 @@ const Header = () => {
 
   //geting from redux the information of cart and users
   const { cartItems } = useSelector((state) => state.cart);
+
   const { userInfo } = useSelector((state) => state.auth);
 
   const logoutHandler = () => {
@@ -30,7 +31,12 @@ const Header = () => {
 
   // Array containing header navigation items
   const primaryHeaderItems = [
-    { id: 1, text: "Sign-In", link: "/profile", icon: <IoPersonSharp /> },
+    {
+      id: 1,
+      text: "Sign-In",
+      link: userInfo ? "/profile" : "/signin",
+      icon: <IoPersonSharp />,
+    },
     { id: 2, text: "Wish List", link: "/wish-list", icon: <FaHeart /> },
     { id: 3, text: "Bag", link: "/cart", icon: <FaShoppingBag /> },
   ];
@@ -102,6 +108,17 @@ const Header = () => {
                       <>
                         <p className="ml-2">{item.text}</p>
                         {item.icon}
+                        {/* Logic for the Sign-In/Logout Button Rendering */}
+                        {item.text === "Sign-In" && userInfo ? (
+                          <div className="dark:bg-[#1d1e23] bg-white justify-center items-center h-14 mx-auto px-4 dark:text-white text-black hidden md:flex w-full">
+                            <Link className="p-4 hover:bg-[#3bba9c] rounded-xl m-2 cursor-pointer duration-300 hover:text-black">
+                              <p>{userInfo.name}</p>
+                            </Link>
+                            <button onClick={logoutHandler}>Logout</button>
+                          </div>
+                        ) : (
+                          <p>Sign-In</p>
+                        )}
                       </>
                     ) : (
                       <>{item.icon}</>
