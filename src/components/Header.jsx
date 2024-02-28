@@ -34,7 +34,7 @@ const Header = () => {
     {
       id: 1,
       text: "Sign-In",
-      link: userInfo ? "/profile" : "/signin",
+      link: userInfo ? "/profile" : "/login",
       icon: <IoPersonSharp />,
     },
     { id: 2, text: "Wish List", link: "/wish-list", icon: <FaHeart /> },
