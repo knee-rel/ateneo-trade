@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useLogoutMutation } from "../slices/userApiSlice";
+import { logout } from "../slices/authSlice";
 
 //icons
 import { FaHeart } from "react-icons/fa";
 import { FaShoppingBag } from "react-icons/fa";
 import { IoPersonSharp } from "react-icons/io5";
+import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 
 const Header = () => {
   // State to manage the navbar's visibility
@@ -20,8 +23,19 @@ const Header = () => {
 
   const { userInfo } = useSelector((state) => state.auth);
 
-  const logoutHandler = () => {
-    console.log("logout");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [logoutApiCall] = useLogoutMutation();
+
+  const logoutHandler = async () => {
+    try {
+      await logoutApiCall().unwrap();
+      dispatch(logout());
+      navigate("/login");
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   // Toggle function to handle the navbar's display
