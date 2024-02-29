@@ -3,6 +3,8 @@ import { useGetProductsQuery } from "../slices/productsApiSlice";
 import Product from "../components/Product";
 import LoadingSpinner from "../components/LoadingSpinner";
 
+import CarouselElement from "../components/Carousel";
+
 const HomeScreen = () => {
   const { data: products, isLoading, error } = useGetProductsQuery();
 
@@ -16,12 +18,13 @@ const HomeScreen = () => {
         <div>{error?.data.message || error.error}</div>
       ) : (
         <div className="flex-col w-full justify-center items-center">
-          <h1 className="text-gray-800 dark:text-white pt-3 font-bold text-3xl text-center">
+          <CarouselElement />
+          <h1 className="text-gray-800 dark:text-white pt-3 font-bold text-3xl text-center mt-6">
             Ateneo Trade Products
           </h1>
-          <div className="flex flex-wrap items-center justify-center">
+          <div className="flex flex-wrap items-center justify-center mt-4">
             {products.map((product) => (
-              <div key={product._id}>
+              <div key={product._id} className="m-4">
                 <div>
                   <Product product={product} />
                 </div>
