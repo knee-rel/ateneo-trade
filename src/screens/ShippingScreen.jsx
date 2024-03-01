@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 import { saveShippingAddress } from "../slices/cartSlice";
 
 import Input from "../components/Input";
 import Button from "../components/Button";
-// import LoadingSpinner from "../components/LoadingSpinner";
 
 import { IoInformationCircleOutline } from "react-icons/io5";
 import { IoIosClose } from "react-icons/io";
@@ -17,6 +18,7 @@ const ShippingScreen = () => {
   const [firstName, setFirstName] = useState(shippingAddress?.firstName || "");
   const [lastName, setLastName] = useState(shippingAddress?.lastName || "");
   const [email, setEmail] = useState(shippingAddress?.email || "");
+  const [mobile, setMobile] = useState(shippingAddress?.mobile || "");
   const [address, setAddress] = useState(shippingAddress?.address || "");
   const [city, setCity] = useState(shippingAddress?.city || "");
   const [state, setState] = useState(shippingAddress?.state || "");
@@ -28,6 +30,10 @@ const ShippingScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const handlePhoneChange = (value) => {
+    setMobile(value);
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(saveShippingAddress({ address, city, postalCode, country }));
@@ -35,192 +41,8 @@ const ShippingScreen = () => {
   };
 
   return (
-    <div className="h-screen grid grid-cols-3">
-      <div className="lg:col-span-2 col-span-3 bg-indigo-50 space-y-8 px-12">
-        <div className="mt-8 p-4 relative flex flex-col sm:flex-row sm:items-center bg-white shadow rounded-md">
-          <div className="flex flex-row items-center border-b sm:border-b-0 w-full sm:w-auto pb-4 sm:pb-0">
-            <div className="text-yellow-500">
-              <IoInformationCircleOutline />
-            </div>
-            <div className="text-sm font-medium ml-3">Checkout</div>
-          </div>
-          <div className="text-sm tracking-wide text-gray-500 mt-4 sm:mt-0 sm:ml-4">
-            Complete your shipping and payment details below.
-          </div>
-          <div className="absolute sm:relative sm:top-auto sm:right-auto ml-auto right-4 top-4 text-gray-400 hover:text-gray-800 cursor-pointer">
-            <IoIosClose />
-          </div>
-        </div>
-        <div className="rounded-md">
-          <form
-            id="payment-form"
-            method="POST"
-            action=""
-            onSubmit={submitHandler}
-          >
-            <section>
-              <h2 className="uppercase tracking-wide text-lg font-semibold text-gray-700 my-2">
-                Shipping & Billing Information
-              </h2>
-              <fieldset className="mb-3 bg-white shadow-lg rounded text-gray-60 w-full">
-                <label className="flex border-b border-gray-200 h-12 py-3 items-center w-1/2">
-                  <span className="text-right px-2">First Name</span>
-                  <Input
-                    id={firstName}
-                    type={firstName}
-                    name={firstName}
-                    placeholder="First Name"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    size="plain"
-                    classNameName="focus:outline-none px-3"
-                  />
-                </label>
-                <label className="flex border-b border-gray-200 h-12 py-3 items-center w-1/2">
-                  <span className="text-right px-2">Last Name</span>
-                  <Input
-                    id={lastName}
-                    type={lastName}
-                    name={lastName}
-                    placeholder="Last Name"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    size="plain"
-                  />
-                </label>
-
-                <label className="flex border-b border-gray-200 h-12 py-3 items-center">
-                  <span className="text-right px-2">Email</span>
-                  <Input
-                    id={email}
-                    type={email}
-                    name={email}
-                    placeholder="E-Mail Address"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    size="plain"
-                  />
-                </label>
-                <label className="flex border-b border-gray-200 h-12 py-3 items-center">
-                  <span className="text-right px-2">Address</span>
-                  <Input
-                    id={address}
-                    type={address}
-                    nme={address}
-                    placeholder="Address"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    className="plain"
-                  />
-                </label>
-                <label className="flex border-b border-gray-200 h-12 py-3 items-center justify-cener">
-                  <span className="text-right px-2">City</span>
-                  <Input
-                    id={city}
-                    type={city}
-                    nme={city}
-                    placeholder="city"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                    className="plain"
-                  />
-                </label>
-                <label className="inline-flex w-2/4 border-gray-200 py-3">
-                  <span className="text-right px-2">State</span>
-                  <Input
-                    id={state}
-                    type={state}
-                    nme={state}
-                    placeholder="state"
-                    value={state}
-                    onChange={(e) => setState(e.target.value)}
-                    className="plain"
-                  />
-                </label>
-                <label className="xl:w-1/4 xl:inline-flex items-center flex xl:border-none border-t border-gray-200 py-3">
-                  <span className="text-right px-2 xl:px-0 xl:text-none">
-                    ZIP
-                  </span>
-                  <Input
-                    id={postalCode}
-                    type={postalCode}
-                    nme={postalCode}
-                    placeholder="Postal Code"
-                    value={postalCode}
-                    onChange={(e) => setPostalCode(e.target.value)}
-                  />
-                </label>
-                <label className="flex border-t border-gray-200 h-12 py-3 items-center select relative">
-                  <span className="text-right px-2">Country</span>
-                  <div
-                    id="country"
-                    className="focus:outline-none px-3 w-full flex items-center"
-                  >
-                    <select
-                      name="country"
-                      value={country}
-                      onChange={(e) => setCountry(e.target.value)}
-                      className="border-none bg-transparent flex-1 cursor-pointer appearance-none focus:outline-none"
-                    >
-                      <option value="AU">Australia</option>
-                      <option value="BE">Belgium</option>
-                      <option value="BR">Brazil</option>
-                      <option value="CA">Canada</option>
-                      <option value="CN">China</option>
-                      <option value="DK">Denmark</option>
-                      <option value="FI">Finland</option>
-                      <option value="FR">France</option>
-                      <option value="DE">Germany</option>
-                      <option value="HK">Hong Kong</option>
-                      <option value="IE">Ireland</option>
-                      <option value="IT">Italy</option>
-                      <option value="JP">Japan</option>
-                      <option value="LU">Luxembourg</option>
-                      <option value="MX">Mexico</option>
-                      <option value="NL">Netherlands</option>
-                      <option value="PH">Philippines</option>
-                      <option value="PL">Poland</option>
-                      <option value="PT">Portugal</option>
-                      <option value="SG">Singapore</option>
-                      <option value="ES">Spain</option>
-                      <option value="TN">Tunisia</option>
-                      <option value="GB">United Kingdom</option>
-                      <option value="US" selected="selected">
-                        United States
-                      </option>
-                    </select>
-                  </div>
-                </label>
-              </fieldset>
-            </section>
-          </form>
-        </div>
-        <div className="rounded-md">
-          <section>
-            <h2 className="uppercase tracking-wide text-lg font-semibold text-gray-700 my-2">
-              Payment Information
-            </h2>
-            <fieldset className="mb-3 bg-white shadow-lg rounded text-gray-600">
-              <label className="flex border-b border-gray-200 h-12 py-3 items-center">
-                <span className="text-right px-2">Card</span>
-                <input
-                  name="card"
-                  className="focus:outline-none px-3 w-full"
-                  placeholder="Card number MM/YY CVC"
-                  required=""
-                />
-              </label>
-            </fieldset>
-          </section>
-        </div>
-        {/* <button className="submit-button px-4 py-3 rounded-full bg-pink-400 text-white focus:ring focus:outline-none w-full text-xl font-semibold transition-colors">
-      Pay €846.98
-    </button> */}
-        <Button classNameName="flex items-center justify-center focus:outline-none text-white text-sm sm:text-base bg-blue-600 hover:bg-blue-700 rounded py-2 w-full transition duration-150 ease-in">
-          Continue
-        </Button>
-      </div>
-      <div className="col-span-1 bg-white lg:block hidden">
+    <div className="lg:grid lg:grid-cols-3 grid grid-cols-1">
+      <div className="lg:col-span-1 col-span-1 bg-white lg:sticky lg:top-0 lg:py-4 lg:overflow-y-auto">
         <h1 className="py-6 border-b-2 text-xl text-gray-600 px-8">
           Order Summary
         </h1>
@@ -290,6 +112,222 @@ const ShippingScreen = () => {
           <span>Total</span>
           <span>€846.98</span>
         </div>
+      </div>
+      <div className="lg:col-span-2 col-span-1 space-y-8 px-12">
+        <div className="mt-8 p-4 relative flex flex-col sm:flex-row sm:items-center bg-gray-100 shadow rounded-md">
+          <div className="flex flex-row items-center border-b sm:border-b-0 w-full sm:w-auto pb-4 sm:pb-0">
+            <div className="text-yellow-500">
+              <IoInformationCircleOutline />
+            </div>
+            <div className="text-sm font-medium ml-3">Checkout</div>
+          </div>
+          <div className="text-sm tracking-wide text-gray-500 mt-4 sm:mt-0 sm:ml-4">
+            Complete your shipping and payment details below.
+          </div>
+          <div className="absolute sm:relative sm:top-auto sm:right-auto ml-auto right-4 top-4 text-gray-400 hover:text-gray-800 cursor-pointer">
+            <IoIosClose />
+          </div>
+        </div>
+        <div className="rounded-md">
+          <form
+            id="payment-form"
+            method="POST"
+            action=""
+            onSubmit={submitHandler}
+            className="rounded-lg"
+          >
+            <section>
+              <h2 className="uppercase tracking-wide text-lg font-semibold text-gray-700 my-2">
+                Shipping & Billing Information
+              </h2>
+              <div className="flex-col items-center justify-center mb-3 p-5 bg-gray-100 shadow-lg rounded text-gray-60 w-full">
+                <div className="w-full flex items-center">
+                  <div className="w-1/2 py-2 mb-2 mt-2 mr-2 rounded-lg border-gray-200 bg-white flex-col items-center justify-start">
+                    <label className=" h-12 justify-center items-center">
+                      <span className="text-right px-2 text-xs text-gray-400 ml-1">
+                        First Name
+                      </span>
+                    </label>
+                    <Input
+                      id={firstName}
+                      type={firstName}
+                      name={firstName}
+                      placeholder="First Name"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      size="plain"
+                    />
+                  </div>
+
+                  <div className="w-1/2 py-2 mb-2 mt-2 mr-2 rounded-lg border-gray-200 bg-white flex-col items-center justify-start">
+                    <label className=" h-12 justify-center items-center">
+                      <span className="text-right px-2 text-xs text-gray-400 ml-1">
+                        Last Name
+                      </span>
+                    </label>
+                    <Input
+                      id={lastName}
+                      type={lastName}
+                      name={lastName}
+                      placeholder="Last Name"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      size="plain"
+                    />
+                  </div>
+                </div>
+
+                <div className="w-full flex items-center">
+                  <div className="w-1/2 py-2 mb-2 mt-2 mr-2 rounded-lg border-gray-200 bg-white flex-col items-center justify-start">
+                    <label className=" h-12 justify-center items-center">
+                      <span className="text-right px-2 text-xs text-gray-400 ml-1">
+                        Email Address
+                      </span>
+                    </label>
+                    <Input
+                      id={email}
+                      type={email}
+                      name={email}
+                      placeholder="Email Address"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      size="plain"
+                    />
+                  </div>
+
+                  <div className="w-1/2 py-2 mb-1 mt-1 mr-2 rounded-lg border-gray-200 bg-white flex-col items-center justify-start">
+                    <label className=" h-12 justify-center items-center">
+                      <span className="text-right px-2 text-xs text-gray-400 ml-1">
+                        Mobile Number
+                      </span>
+                    </label>
+                    <PhoneInput
+                      country={"ph"}
+                      flagIcon="globe"
+                      value={mobile}
+                      onChange={handlePhoneChange}
+                      className="flex pl-3 pr-3"
+                    />
+                  </div>
+                </div>
+
+                <div className="w-full flex items-center">
+                  <div className="w-1/2 py-2 mb-2 mt-2 mr-2 rounded-lg border-gray-200 bg-white flex-col items-center justify-start">
+                    <label className=" h-12 justify-center items-center">
+                      <span className="text-right px-2 text-xs text-gray-400 ml-1">
+                        Address
+                      </span>
+                    </label>
+                    <Input
+                      id={address}
+                      type={address}
+                      name={address}
+                      placeholder="11 Maligaya St."
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                      size="plain"
+                    />
+                  </div>
+
+                  <div className="w-1/2 py-2 mb-2 mt-2 mr-2 rounded-lg border-gray-200 bg-white flex-col items-center justify-start">
+                    <label className=" h-12 justify-center items-center">
+                      <span className="text-right px-2 text-xs text-gray-400 ml-1">
+                        City
+                      </span>
+                    </label>
+                    <Input
+                      id={city}
+                      type={city}
+                      nme={city}
+                      placeholder="Manila"
+                      value={city}
+                      onChange={(e) => setCity(e.target.value)}
+                      className="plain"
+                    />
+                  </div>
+                </div>
+
+                <div className="w-full flex items-center">
+                  <div className="w-1/3 py-2 mb-2 mt-2 mr-2 rounded-lg border-gray-200 bg-white flex-col items-center justify-start">
+                    <label className=" h-12 justify-center items-center">
+                      <span className="text-right px-2 text-xs text-gray-400 ml-1">
+                        State
+                      </span>
+                    </label>
+                    <Input
+                      id={state}
+                      type={state}
+                      nme={state}
+                      placeholder="Metro Manila"
+                      value={state}
+                      onChange={(e) => setState(e.target.value)}
+                      className="plain"
+                    />
+                  </div>
+                  <div className="w-1/3 py-2 mb-2 mt-2 mr-2 rounded-lg border-gray-200 bg-white flex-col items-center justify-start">
+                    <label className=" h-12 justify-center items-center">
+                      <span className="text-right px-2 text-xs text-gray-400 ml-1">
+                        Zip Code
+                      </span>
+                    </label>
+                    <Input
+                      id={postalCode}
+                      type={postalCode}
+                      name={postalCode}
+                      placeholder="Postal Code"
+                      value={postalCode}
+                      onChange={(e) => setPostalCode(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="w-1/2 mb-2 mt-2 mr-2 rounded-lg border-gray-200 bg-white flex-col items-center justify-start">
+                    <label className="flex justify-start items-center">
+                      <span className="text-right px-2 text-xs text-gray-400 ml-1">
+                        Country
+                      </span>
+                    </label>
+                    <select
+                      name="country"
+                      value={country}
+                      onChange={(e) => setCountry(e.target.value)}
+                      className="border-none p-3 bg-transparent flex-1 cursor-pointer appearance-none focus:outline-none"
+                    >
+                      <option value="AU">Australia</option>
+                      <option value="BE">Belgium</option>
+                      <option value="BR">Brazil</option>
+                      <option value="CA">Canada</option>
+                      <option value="CN">China</option>
+                      <option value="DK">Denmark</option>
+                      <option value="FI">Finland</option>
+                      <option value="FR">France</option>
+                      <option value="DE">Germany</option>
+                      <option value="HK">Hong Kong</option>
+                      <option value="IE">Ireland</option>
+                      <option value="IT">Italy</option>
+                      <option value="JP">Japan</option>
+                      <option value="LU">Luxembourg</option>
+                      <option value="MX">Mexico</option>
+                      <option value="NL">Netherlands</option>
+                      <option value="PH">Philippines</option>
+                      <option value="PL">Poland</option>
+                      <option value="PT">Portugal</option>
+                      <option value="SG">Singapore</option>
+                      <option value="ES">Spain</option>
+                      <option value="TN">Tunisia</option>
+                      <option value="GB">United Kingdom</option>
+                      <option value="US" selected="selected">
+                        United States
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </form>
+        </div>
+        <Button classNameName="flex items-center justify-center focus:outline-none text-white text-sm sm:text-base bg-blue-600 hover:bg-blue-700 rounded py-2 w-full transition duration-150 ease-in">
+          Continue
+        </Button>
       </div>
     </div>
   );
