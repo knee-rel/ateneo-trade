@@ -27,12 +27,14 @@ const Input = ({
 
   return (
     <input
-      {...props}
       id={id}
       type={type}
       name={name}
       className={inputClasses}
       placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+      {...props}
     />
   );
 };

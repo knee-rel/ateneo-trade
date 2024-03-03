@@ -38,7 +38,7 @@ const LoginScreen = () => {
       dispatch(setCredentials({ ...res }));
       navigate(redirect);
     } catch (err) {
-      toast.error(err?.date.message || err.error);
+      toast.error(err?.data.message || err.error);
     }
   };
 
@@ -164,7 +164,9 @@ const LoginScreen = () => {
               </Button>
             </div>
           </form>
-          {isLoading && <LoadingSpinner />}
+          <div className="flex items-center justify-center">
+            {isLoading && <LoadingSpinner />}
+          </div>
         </div>
         <div className="flex justify-center items-center mt-6">
           <Link

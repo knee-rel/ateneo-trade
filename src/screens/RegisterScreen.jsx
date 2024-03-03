@@ -47,6 +47,7 @@ const RegisterScreen = () => {
       toast.error("Passwords do not match");
     } else {
       try {
+        console.log("Submitting:", { firstName, lastName, email, password });
         const res = await register({
           firstName,
           lastName,
@@ -56,6 +57,7 @@ const RegisterScreen = () => {
         dispatch(setCredentials({ ...res }));
         navigate(redirect);
       } catch (err) {
+        console.error(err);
         toast.error(err?.data?.message || err.error);
       }
     }
@@ -81,10 +83,10 @@ const RegisterScreen = () => {
           </div>
         </div>
         <div className="mt-10">
-          <form action="#" onSubmit={submitHandler}>
+          <form onSubmit={submitHandler}>
             <div className="flex flex-col mb-6">
               <label
-                for="firstName"
+                htmlFor="firstName"
                 className="mb-1 text-xs sm:text-sm tracking-wide text-gray-600"
               >
                 First Name:
@@ -94,9 +96,7 @@ const RegisterScreen = () => {
                   <MdDriveFileRenameOutline />
                 </div>
                 <Input
-                  id={firstName}
-                  type={firstName}
-                  name={firstName}
+                  type="text"
                   placeholder="First Name"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
@@ -106,7 +106,7 @@ const RegisterScreen = () => {
             </div>
             <div className="flex flex-col mb-6">
               <label
-                for="email"
+                htmlFor="email"
                 className="mb-1 text-xs sm:text-sm tracking-wide text-gray-600"
               >
                 Last Name
@@ -116,9 +116,7 @@ const RegisterScreen = () => {
                   <MdDriveFileRenameOutline />
                 </div>
                 <Input
-                  id={lastName}
-                  type={lastName}
-                  name={lastName}
+                  type="text"
                   placeholder="Last Name"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
@@ -128,7 +126,7 @@ const RegisterScreen = () => {
             </div>
             <div className="flex flex-col mb-6">
               <label
-                for="email"
+                htmlFor="email"
                 className="mb-1 text-xs sm:text-sm tracking-wide text-gray-600"
               >
                 E-Mail Address:
@@ -138,9 +136,7 @@ const RegisterScreen = () => {
                   <HiOutlineMail />
                 </div>
                 <Input
-                  id={email}
-                  type={email}
-                  name={email}
+                  type="email"
                   placeholder="E-Mail Address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -150,7 +146,7 @@ const RegisterScreen = () => {
             </div>
             <div className="flex flex-col mb-6">
               <label
-                for="password"
+                htmlFor="password"
                 className="mb-1 text-xs sm:text-sm tracking-wide text-gray-600"
               >
                 Password:
@@ -160,9 +156,7 @@ const RegisterScreen = () => {
                   <CiLock />
                 </div>
                 <Input
-                  id="password"
                   type="password"
-                  name="password"
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -172,7 +166,7 @@ const RegisterScreen = () => {
             </div>
             <div className="flex flex-col mb-6">
               <label
-                for="password"
+                htmlFor="password"
                 className="mb-1 text-xs sm:text-sm tracking-wide text-gray-600"
               >
                 Confirm Password:
@@ -182,9 +176,7 @@ const RegisterScreen = () => {
                   <CiLock />
                 </div>
                 <Input
-                  id="confirmPassword"
-                  type="confirmPassword"
-                  name="confirmPassword"
+                  type="password"
                   placeholder="Confirm Password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
@@ -204,7 +196,7 @@ const RegisterScreen = () => {
               </div>
             </div>
 
-            <div className="flex w-full">
+            <div className="flex w-full items-center justify-center">
               <Button
                 disabled={isLoading}
                 type="submit"
@@ -215,7 +207,9 @@ const RegisterScreen = () => {
               </Button>
             </div>
           </form>
-          {isLoading && <LoadingSpinner />}
+          <div className="flex items-center justify-center">
+            {isLoading && <LoadingSpinner />}
+          </div>
         </div>
         <div className="flex justify-center items-center mt-6">
           <Link
