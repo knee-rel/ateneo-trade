@@ -20,31 +20,33 @@ const CarouselElement = () => {
   };
 
   return (
-    <Carousel
-      showArrows={true}
-      onChange={onChange}
-      onClickItem={onClickItem}
-      onClickThumb={onClickThumb}
-    >
-      <div>
-        <img src={imageOne} alt="Slide 1" />
-      </div>
-      <div>
-        <img src={imageTwo} alt="Slide 2" />
-      </div>
-      <div>
-        <img src={imageOne} alt="Slide 3" />
-      </div>
-      <div>
-        <img src={imageTwo} alt="Slide 4" />
-      </div>
-      <div>
-        <img src={imageOne} alt="Slide 5" />
-      </div>
-      <div>
-        <img src={imageTwo} alt="Slide 6" />
-      </div>
-    </Carousel>
+    <div className="max-w-3xl mx-auto">
+      <Carousel
+        showArrows={true}
+        onChange={onChange}
+        onClickItem={onClickItem}
+        onClickThumb={onClickThumb}
+      >
+        <div className="max-h-96">
+          <img src={imageOne} alt="Slide 1" className="object-contain h-full w-full" />
+        </div>
+        <div className="max-h-96">
+          <img src={imageTwo} alt="Slide 2" className="object-contain h-full w-full" />
+        </div>
+        <div className="max-h-96">
+          <img src={imageOne} alt="Slide 3" className="object-contain h-full w-full" />
+        </div>
+        <div className="max-h-96">
+          <img src={imageTwo} alt="Slide 4" className="object-contain h-full w-full" />
+        </div>
+        <div className="max-h-96">
+          <img src={imageOne} alt="Slide 5" className="object-contain h-full w-full" />
+        </div>
+        <div className="max-h-96">
+          <img src={imageTwo} alt="Slide 6" className="object-contain h-full w-full" />
+        </div>
+      </Carousel>
+    </div>
   );
 };
 
