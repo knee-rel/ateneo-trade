@@ -18,7 +18,9 @@ const HomeScreen = () => {
         <div>{error?.data.message || error.error}</div>
       ) : (
         <div className="flex-col w-full justify-center items-center">
-          <CarouselElement />
+          <div className="mb-10">
+            <CarouselElement />
+          </div>
           <h1 className="text-gray-800 dark:text-white pt-3 font-bold text-3xl text-center mt-6">
             Ateneo Trade Products
           </h1>
